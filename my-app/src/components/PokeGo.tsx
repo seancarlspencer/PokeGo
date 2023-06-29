@@ -7,11 +7,11 @@ const PokeGo = () => {
 
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
+  const PASSWORD = process.env.REACT_APP_PASSWORD;
 
   useEffect(() => {
     const pokeAuthenticatedCookie = localStorage.getItem('pokeAuthenticated');
-
-    if (pokeAuthenticatedCookie === 'true') {
+if (pokeAuthenticatedCookie === PASSWORD) {
       setAuthenticated(true);
     }
   }, []);
@@ -24,11 +24,11 @@ const PokeGo = () => {
     event.preventDefault();
 
     // Replace 'your-password' with your desired password
-    const expectedPassword = 'jan';
+    const expectedPassword = PASSWORD;
 
     if (password === expectedPassword) {
       setAuthenticated(true);
-      localStorage.setItem('pokeAuthenticated', 'true');
+      localStorage.setItem('pokeAuthenticated', password);
     } else {
       setPassword('');
       setAuthenticated(false);

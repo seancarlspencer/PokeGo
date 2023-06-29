@@ -23,15 +23,15 @@ const PokeInput: React.FC<PokeProps> = ({pokemon,val1,val2}) => {
             <img src={require(`../icons/201-${unknown[Math.floor(Math.random()*unknown.length)]}.png`)} />
           }
           <div className="pokemon-name">{pokemon}</div>
-          <div className={`input-1-container${val1 == 100 ? " solo" : ""}`}><input type="text" id="val1" defaultValue={val1.toString()}></input><span>%</span></div>
-          <div className={`input-1-container${val2 == 100 ? " solo" : ""}`}><input type="text" id="val2" defaultValue={val2.toString()}></input><span>%</span></div>
+          <div className={`input-dmg-container${val1 == 100 ? " solo" : ""}`}><input type="text" id="val1" defaultValue={val1.toString()}></input><span>%</span></div>
+          <div className={`input-dmg-container${val2 == 100 ? " solo" : ""}`}><input type="text" id="val2" defaultValue={val2.toString()}></input><span>%</span></div>
         </div>
       :
       <div className="pokemon-input input-container">
         <img src={require(`../icons/201-${unknown[Math.floor(Math.random()*unknown.length)]}.png`)} />
         <div className="pokemon-name">{pokemon}</div>
-        <div className={`input-1-container${val1 == 100 ? " solo" : ""}`}><input type="text" id="val1" defaultValue={val1.toString()}></input><span>%</span></div>
-        <div className={`input-1-container${val2 == 100 ? " solo" : ""}`}><input type="text" id="val2" defaultValue={val2.toString()}></input><span>%</span></div>
+        <div className={`input-dmg-container${val1 == 100 ? " solo" : ""}`}><input type="text" id="val1" defaultValue={val1.toString()}></input><span>%</span></div>
+        <div className={`input-dmg-container${val2 == 100 ? " solo" : ""}`}><input type="text" id="val2" defaultValue={val2.toString()}></input><span>%</span></div>
       </div>
     }
     </div>
