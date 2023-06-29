@@ -16,22 +16,22 @@ const PokeInput: React.FC<PokeProps> = ({pokemon,val1,val2}) => {
   return (
     <div>
       {Object.keys(pokemonList).includes(pokemon) ?
-        <div className="input-container">
+        <div className="pokemon-input input-container">
           {pokemonList[pokemon as keyof typeof pokemonList] <= 721 ?
             <img src={require(`../icons/${pokemonList[pokemon as keyof typeof pokemonList].toString()}.png`)} />
             :
             <img src={require(`../icons/201-${unknown[Math.floor(Math.random()*unknown.length)]}.png`)} />
           }
-          <div>{pokemon}</div>
-          <div className={`input-1-container${val1 == 100 ? " solo" : ""}`}><input type="text" defaultValue={val1.toString()}></input><span>%</span></div>
-          <div className={`input-1-container${val2 == 100 ? " solo" : ""}`}><input type="text" defaultValue={val2.toString()}></input><span>%</span></div>
+          <div className="pokemon-name">{pokemon}</div>
+          <div className={`input-1-container${val1 == 100 ? " solo" : ""}`}><input type="text" id="val1" defaultValue={val1.toString()}></input><span>%</span></div>
+          <div className={`input-1-container${val2 == 100 ? " solo" : ""}`}><input type="text" id="val2" defaultValue={val2.toString()}></input><span>%</span></div>
         </div>
       :
-      <div className="input-container">
+      <div className="pokemon-input input-container">
         <img src={require(`../icons/201-${unknown[Math.floor(Math.random()*unknown.length)]}.png`)} />
-        <div>{pokemon}</div>
-        <div className={`input-1-container${val1 == 100 ? " solo" : ""}`}><input type="text" defaultValue={val1.toString()}></input><span>%</span></div>
-        <div className={`input-1-container${val2 == 100 ? " solo" : ""}`}><input type="text" defaultValue={val2.toString()}></input><span>%</span></div>
+        <div className="pokemon-name">{pokemon}</div>
+        <div className={`input-1-container${val1 == 100 ? " solo" : ""}`}><input type="text" id="val1" defaultValue={val1.toString()}></input><span>%</span></div>
+        <div className={`input-1-container${val2 == 100 ? " solo" : ""}`}><input type="text" id="val2" defaultValue={val2.toString()}></input><span>%</span></div>
       </div>
     }
     </div>
