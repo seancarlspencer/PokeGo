@@ -2,82 +2,41 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { increment, decrement } from '../actions/actions';
 import PokeInput from './PokeInput';
+import database from '../firebase';
 
 const PokeSheet = () => {
-  const [pokemon, setPokemon] = useState([
-    "Articuno",
-    "Zapdos",
-    "Moltres",
-    "Mewtwo",
-    "Entei",
-    "Raikou",
-    "Suicune ",
-    "Lugia",
-    "Ho-Oh",
-    "Regirock",
-    "Regice",
-    "Registeel",
-    "Latias",
-    "Mega Latias",
-    "Latios ",
-    "Mega Latios",
-    "Kyogre",
-    "Primal Kyogre ",
-    "Groudon",
-    "Primal Groudon",
-    "Rayquaza",
-    "Mega Rayquaza",
-    "Deoxys (D)",
-    "Deoxys (N)",
-    "Deoxys (A)",
-    "Deoxys (S)",
-    "Uxie",
-    "Mesprit",
-    "Azelf",
-    "Dialga",
-    "Palkia",
-    "Heatran",
-    "Regigigas",
-    "Giratina (A)",
-    "Giratina (O)",
-    "Cresselia",
-    "Darkrai",
-    "Cobalion",
-    "Terrakion",
-    "Verizion ",
-    "Tornadus",
-    "Tornadus-T",
-    "Thundurus ",
-    "Thundurus-T",
-    "Reshiram",
-    "Zekrom",
-    "Landorus ",
-    "Landorus-T",
-    "Kyurem",
-    "Genesect",
-    "Xerneas",
-    "Yveltal",
-    "Hoopa",
-    "Nihilego",
-    "Buzzwole",
-    "Pheromosa ",
-    "Xurkitree",
-    "Celesteela",
-    "Kartana",
-    "Guzzlord",
-    "Zacian",
-    "Zamazenta",
-    "Regieleki ",
-    "Regidrago"
-  ]);
+  const [pokemon, setPokemon] = useState({});
+
+  useEffect(() => {
+    const pokemonDisplay = database.ref("pokemon").get().then((data)=>{
+      console.log(data.val());
+      setPokemon(data.val());
+    })
+  }, []);
+
+  const Push = () => {
+    console.log("logging");
+    // Build Array
+
+    database.ref("pokemon").set({
+    }).catch(alert);
+}
 
   return (
     <div className="pokesheet">
-      {pokemon.map((pokemonAsset)=>{
+      <div className="pokesheet-header input-container">
+        <div className="raid-boss">Raid Boss</div>
+        <div className="Johnny">Johnny</div>
+        <div className="Remy">Remy</div>
+      </div>
+      {Object.keys(pokemon).map((poke)=>{
       return <PokeInput
-      pokemon={pokemonAsset}
+      pokemon={poke}
+      val1={pokemon[poke as keyof typeof pokemon][0]}
+      val2={pokemon[poke as keyof typeof pokemon][1]}
       />
       })}
+      {/* <button className="submit" onClick={Push}>Save</button> */}
     </div>
   );
 };
