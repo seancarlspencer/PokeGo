@@ -33,7 +33,6 @@ const PokeSheet = () => {
         let name=nameEl.innerHTML;
         let val1=parseFloat(val1El.value);
         let val2=parseFloat(val2El.value);
-        console.log(name);
         result[name] = [val1,val2]
       }
     })
@@ -111,8 +110,8 @@ const PokeSheet = () => {
     <div className="pokesheet">
       <div className="pokesheet-header input-container">
         <div className="raid-boss">Raid Boss</div>
-        <div className="Johnny">Johnny</div>
-        <div className="Remy">Remy</div>
+        <div className="Johnny pokemaster">Johnny</div>
+        <div className="Remy pokemaster">Remy</div>
       </div>
       {Object.keys(pokemon).map((poke)=>{
       return <PokeInput
@@ -121,7 +120,9 @@ const PokeSheet = () => {
       val2={pokemon[poke as keyof typeof pokemon][1]}
       />
       })}
-      <button className="submit" onClick={Push}>Save</button>
+      <div className="button-container">
+        <button className="submit" onClick={Push}>Save</button>
+      </div>
     </div>
   );
 };
