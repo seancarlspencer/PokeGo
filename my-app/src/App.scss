@@ -43,6 +43,7 @@
 
 .pokesheet{
   width: clamp(250px,100%, 400px);
+  margin: auto;
 }
 
 .input-container{
@@ -50,7 +51,7 @@
   width: 100%;
   grid-template-columns: 40px 1fr 1fr 1fr;
   gap:6px;
-  margin: 24px 6px;
+  margin: 12px 6px;
   align-items: center;
   &.pokesheet-header{
     font-weight: bold;
@@ -78,15 +79,32 @@
     gap: 6px;
     padding: 6px;
     align-items: center;
-    &.solo{
+    &.clear{
       background-color: rgb(122, 231, 122);
     }
+    &.solo{
+      background-color: rgb(122, 202, 231);
+    }
+  }
+  img{
+    transform: scale(1.1);
   }
 }
 
 .button-container{
   display: flex;
   justify-content: center;
+  @media screen and (max-width: 900px) {
+    position: fixed;
+    bottom: 0;
+    left:50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background-color: #00ABF1;
+    padding: 24px;
+    padding-top: 18px;
+    gap: 24px;
+  }
 }
 
 .submit{
@@ -99,4 +117,13 @@
   border-radius: 24px;
   border: none;
   cursor: pointer;
+  @media screen and (max-width: 900px) {
+    margin: 0px;
+  }
+}
+
+.button-buffer{
+  @media screen and (max-width: 900px) {
+    height: 100px;
+  }
 }

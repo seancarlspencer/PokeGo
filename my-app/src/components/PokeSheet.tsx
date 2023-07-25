@@ -6,11 +6,27 @@ import database from '../firebase';
 
 const PokeSheet = () => {
   const [pokemon, setPokemon] = useState({});
+  const [newPokemon, setNewPokemon] = useState(0);
+  const [johnnyTotal, setJohnnyTotal] = useState(0);
+  const [remyTotal, setRemyTotal] = useState(0);
+
 
   useEffect(() => {
     const pokemonDisplay = database.ref("pokemon").get().then((data)=>{
       console.log(data.val());
       setPokemon(data.val());
+      let jTotal = 0;
+      let rTotal = 0;
+      Object.keys(data.val()).forEach((el)=>{
+        if(data.val()[el][0] >= 100){
+          jTotal++;
+        }
+        if(data.val()[el][1] >= 100){
+          rTotal++;
+        }
+      })
+      setJohnnyTotal(jTotal);
+      setRemyTotal(rTotal);
     })
   }, []);
 
@@ -21,23 +37,50 @@ const PokeSheet = () => {
     }, {});
   }
 
+  const Add_Boss = () => {
+    setNewPokemon(newPokemon => newPokemon+1);
+    setTimeout(()=>{window.scrollTo(0, document.body.scrollHeight)},50);
+  }
+
   const Push = () => {
     console.log("logging");
     // Build Array
     let result: any = {};
     document.querySelectorAll(".pokemon-input").forEach((el)=>{
       let nameEl=el.querySelector(".pokemon-name");
+      let nameElVal=el.querySelector<HTMLInputElement>("#pokemon-name-new");
       let val1El=el.querySelector<HTMLInputElement>("#val1");
       let val2El=el.querySelector<HTMLInputElement>("#val2");
       if (nameEl && val1El && val2El){
         let name=nameEl.innerHTML;
         let val1=parseFloat(val1El.value);
         let val2=parseFloat(val2El.value);
+        if(isNaN(val1)){
+          val1=0;
+        }
+        if(isNaN(val2)){
+          val2=0;
+        }
+        result[name] = [val1,val2]
+      }
+      else if (nameElVal && val1El && val2El){
+        let name=nameElVal.value;
+        let val1=parseFloat(val1El.value);
+        let val2=parseFloat(val2El.value);
+        if(isNaN(val1)){
+          val1=0;
+        }
+        if(isNaN(val2)){
+          val2=0;
+        }
         result[name] = [val1,val2]
       }
     })
     console.log(result);
-    database.ref("pokemon").set(result).catch(alert);
+    database.ref("pokemon").set(result).then(()=>{
+      console.log("logged");
+    }).
+    catch(alert);
   //   database.ref("pokemon").set({
   //   "Articuno":[64,0],
   //   "Zapdos":[55.20,0],
@@ -110,18 +153,31 @@ const PokeSheet = () => {
     <div className="pokesheet">
       <div className="pokesheet-header input-container">
         <div className="raid-boss">Raid Boss</div>
-        <div className="Johnny pokemaster">Johnny</div>
-        <div className="Remy pokemaster">Remy</div>
+        <div className="Johnny pokemaster">Johnny {johnnyTotal}/{Object.keys(pokemon).length}</div>
+        <div className="Remy pokemaster">Remy {remyTotal}/{Object.keys(pokemon).length}</div>
       </div>
-      {Object.keys(pokemon).map((poke)=>{
+      {Object.keys(pokemon).map((poke,index)=>{
       return <PokeInput
       pokemon={poke}
       val1={pokemon[poke as keyof typeof pokemon][0]}
       val2={pokemon[poke as keyof typeof pokemon][1]}
+      index={index}
+      newPokemon={false}
       />
       })}
+      {[...Array(newPokemon)].map((poke,index)=>{
+      return <PokeInput
+      pokemon={`New Boss ${index+1}`}
+      val1={0}
+      val2={0}
+      index={index+Object.keys(pokemon).length}
+      newPokemon={true}
+      />
+      })}
+      <div className="button-buffer"></div>
       <div className="button-container">
         <button className="submit" onClick={Push}>Save</button>
+        <button className="add-boss submit" onClick={Add_Boss}>Add Boss</button>
       </div>
     </div>
   );
